@@ -120,7 +120,7 @@ elif [[ "$c" = "all" || "$c" = "All" ]]; then
 #| HELP                                                    |
 #-----------------------------------------------------------
 else
-    echo -e "\nUsage: salah [OPTIONS] [PRAYER]\n"
+    echo -e "Usage: salah [OPTIONS] [PRAYER]\n"
 
     echo -e "-> salah fajr/f"
     echo -e "-> salah sunrise/s"
