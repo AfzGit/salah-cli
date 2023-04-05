@@ -4,7 +4,7 @@ Get Salah timings from salah.com right in the terminal!
 * Installation
 - Linux
 #+BEGIN_SRC bash
-curl https://raw.githubusercontent.com/AfzGit/salah-cli/main/salah-cli --output salah
+curl https://raw.githubusercontent.com/AfzGit/salah-cli/main/salah --output salah
 chmod a+x salah
 sudo mv salah /usr/bin/ # or anywhere in PATH
 #+END_SRC
@@ -19,8 +19,8 @@ sudo mv salah /usr/bin/ # or anywhere in PATH
 - -> salah isha/i
 - -> salah qiyam/q
 - -> salah all
--    -> Get all times
+  - -> Get all times
 
 ** Options: [-f] [--format]
 - -> salah -f fajr
--   -> To format and get only hour and minute numbers (like 4 55 instead of 4:55PM)
+  - -> To format and get only hour and minute numbers (like 4 55 instead of 4:55PM)
