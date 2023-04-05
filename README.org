@@ -1,6 +1,6 @@
 #+TITLE: Salah Timings in cli
 * About
-Get Salah timings from https://salah.com right in the terminal!
+Get Salah (Namaz/Prayer) timings from https://salah.com right in the terminal!
 * Installation
 - Linux
 #+BEGIN_SRC bash
