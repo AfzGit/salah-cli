@@ -1,0 +1,140 @@
+#!/bin/bash
+
+#-----------------------------------------------------------
+#| DEFAULTS                                                |
+#-----------------------------------------------------------
+website="https://salah.com/"
+
+#-----------------------------------------------------------
+#| FUNCTIONS                                               |
+#-----------------------------------------------------------
+pray()
+{
+prayertimes=$(curl -s $website | grep -e : -e dd | sed 's/<[^>]*>//g' | grep -Eo '[0-9]{1,2}:[0-9]{2}\s*(AM|PM)' | tr '\n' ' ')
+}
+
+#-----------------------------------------------------------
+#| OPTIONS                                                 |
+#-----------------------------------------------------------
+if [[ "$1" = "-f" || "$1" = "--format" ]]; then
+    format=t
+    c=$2
+else
+    c=$1
+fi
+
+#-----------------------------------------------------------
+#| FAJR                                                    |
+#-----------------------------------------------------------
+if [[ "$c" = "fajr" || "$c" = "Fajr" || "$c" = "f" || "$c" = "F" ]]; then
+
+    pray
+    if [[ $format = 't' ]]; then
+        echo "$prayertimes" | awk '{print $1}' | sed "s/:/ /" | sed "s/[ap]m//i"
+    else
+        echo "$prayertimes" | awk '{print $1}'
+    fi
+
+#-----------------------------------------------------------
+#| SUNRISE                                                  |
+#-----------------------------------------------------------
+elif [[ "$c" = "sunrise" || "$c" = "duha" || "$c" = "Duha" || "$c" = "Sunrise" || "$c" = "s" || "$c" = "S" ]]; then
+
+    pray
+    if [[ $format = 't' ]]; then
+        echo "$prayertimes" | awk '{print $2}' | sed "s/:/ /" | sed "s/[ap]m//i"
+    else
+        echo "$prayertimes" | awk '{print $2}'
+    fi
+
+#-----------------------------------------------------------
+#| DHUHR                                                    |
+#-----------------------------------------------------------
+elif [[ "$c" = "dhuhr" || "$c" = "Dhuhr" || "$c" = "d" || "$c" = "D" || "$c" = "z" || "$c" = "Z" ]]; then
+
+    pray
+    if [[ $format = 't' ]]; then
+        echo "$prayertimes" | awk '{print $3}' | sed "s/:/ /" | sed "s/[ap]m//i"
+    else
+        echo "$prayertimes" | awk '{print $3}'
+    fi
+
+#-----------------------------------------------------------
+#| ASR                                                     |
+#-----------------------------------------------------------
+elif [[ "$c" = "asr" || "$c" = "Asr" || "$c" = "a" || "$c" = "A" ]]; then
+
+    pray
+    if [[ $format = 't' ]]; then
+        echo "$prayertimes" | awk '{print $4}' | sed "s/:/ /" | sed "s/[ap]m//i"
+    else
+        echo "$prayertimes" | awk '{print $4}'
+    fi
+
+#-----------------------------------------------------------
+#| MAGRIBH                                                 |
+#-----------------------------------------------------------
+elif [[ "$c" = "magribh" || "$c" = "Magribh" || "$c" = "m" || "$c" = "M" || "$c" = "mag" ]]; then
+
+    pray
+    if [[ $format = 't' ]]; then
+        echo "$prayertimes" | awk '{print $5}' | sed "s/:/ /" | sed "s/[ap]m//i"
+    else
+        echo "$prayertimes" | awk '{print $5}'
+    fi
+
+#-----------------------------------------------------------
+#| ISHA                                                    |
+#-----------------------------------------------------------
+elif [[ "$c" = "isha" || "$c" = "Isha" || "$c" = "i" || "$c" = "I" ]]; then
+
+    pray
+    if [[ $format = 't' ]]; then
+        echo "$prayertimes" | awk '{print $6}' | sed "s/:/ /" | sed "s/[ap]m//i"
+    else
+        echo "$prayertimes" | awk '{print $6}'
+    fi
+
+#-----------------------------------------------------------
+#| QIYAM                                                   |
+#-----------------------------------------------------------
+elif [[ "$c" = "qiyam" || "$c" = "Qiyam" || "$c" = "q" || "$c" = "Q" ]]; then
+
+    pray
+    if [[ $format = 't' ]]; then
+        echo "$prayertimes" | awk '{print $7}' | sed "s/:/ /" | sed "s/[ap]m//i"
+    else
+        echo "$prayertimes" | awk '{print $7}'
+    fi
+
+#-----------------------------------------------------------
+#| ALL                                                     |
+#-----------------------------------------------------------
+elif [[ "$c" = "all" || "$c" = "All" ]]; then
+
+    pray
+    echo "FAJR     SUN      DHUHR     ASR      MAG      ISHA     QIYAM"
+    echo "$prayertimes" | sed "s/ /   /g"
+
+#-----------------------------------------------------------
+#| HELP                                                    |
+#-----------------------------------------------------------
+else
+    echo -e "\nUsage: salah [OPTIONS] [PRAYER]\n"
+
+    echo -e "-> salah fajr/f"
+    echo -e "-> salah sunrise/s"
+    echo -e "-> salah dhuhr/d"
+    echo -e "-> salah asr/a"
+    echo -e "-> salah magribh/m"
+    echo -e "-> salah isha/i"
+    echo -e "-> salah qiyam/q"
+    echo -e "-> salah all"
+    echo -e "   -> Get all times"
+
+    echo -e "\nOptions: [-f] [--format]\n"
+
+    echo -e "-> salah -f fajr"
+    echo -e "   -> To format and get only hour and minute numbers (like 4 55 instead of 4:55PM)"
+
+fi
